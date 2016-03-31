@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - "0.10"
+
+services:
+  - selenium
+
+build:
+    ci:
+      - sudo npm install
+      - export DISPLAY=:99.0
+      - xvfb-run --server-args="-ac" npm test
+
+    on_success:
+      - git remote add dokku dokku@45.55.212.130:sample_node_dokku_deploy
+      - git push dokku master --force
